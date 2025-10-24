@@ -1,0 +1,3155 @@
+@import 'tailwindcss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fef6e4;
+  overflow: hidden;
+  position: relative;
+  transition: background 1.5s ease-out;
+}
+
+.app-container.dark-mode {
+  background: #1a1a2e;
+}
+
+/* ==================== STAGE 1: THIỆP SINH NHẬT ==================== */
+.card-stage {
+  position: relative;
+  perspective: 1500px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Trang trí xung quanh */
+.decorations-around {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ruy băng trang trí trên và dưới */
+.ribbon-decoration {
+  position: absolute;
+  width: 100%;
+  height: 80px;
+  left: 0;
+  overflow: visible;
+  z-index: 1;
+}
+
+.ribbon-top {
+  top: -40px;
+}
+
+.ribbon-bottom {
+  bottom: -40px;
+}
+
+.ribbon-wave {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(90deg,
+      #ff6b9d 0%, #ff6b9d 10%,
+      transparent 10%, transparent 12%,
+      #ffd700 12%, #ffd700 22%,
+      transparent 22%, transparent 24%,
+      #87ceeb 24%, #87ceeb 34%,
+      transparent 34%, transparent 36%,
+      #ff9999 36%, #ff9999 46%,
+      transparent 46%, transparent 48%,
+      #ffcc99 48%, #ffcc99 58%,
+      transparent 58%, transparent 60%,
+      #cc99ff 60%, #cc99ff 70%,
+      transparent 70%, transparent 72%,
+      #ff6b9d 72%, #ff6b9d 82%,
+      transparent 82%, transparent 84%,
+      #ffd700 84%, #ffd700 94%,
+      transparent 94%, transparent 96%,
+      #87ceeb 96%, #87ceeb 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: ribbon-wave 3s ease-in-out infinite;
+}
+
+.ribbon-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent 0%, transparent 10%,
+      #c17a5f 10%, #c17a5f 12%,
+      transparent 12%, transparent 22%,
+      #c17a5f 22%, #c17a5f 24%,
+      transparent 24%, transparent 34%,
+      #c17a5f 34%, #c17a5f 36%,
+      transparent 36%, transparent 46%,
+      #c17a5f 46%, #c17a5f 48%,
+      transparent 48%, transparent 58%,
+      #c17a5f 58%, #c17a5f 60%,
+      transparent 60%, transparent 70%,
+      #c17a5f 70%, #c17a5f 72%,
+      transparent 72%, transparent 82%,
+      #c17a5f 82%, #c17a5f 84%,
+      transparent 84%, transparent 94%,
+      #c17a5f 94%, #c17a5f 96%,
+      transparent 96%);
+}
+
+.ribbon-wave::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dây tua rua */
+.garland {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 20px;
+}
+
+.garland-left-1 {
+  left: 8%;
+  transform: rotate(8deg);
+}
+
+.garland-left-2 {
+  left: 14%;
+  transform: rotate(-3deg);
+  padding-top: 80px;
+}
+
+.garland-right-1 {
+  right: 8%;
+  transform: rotate(-7deg);
+  padding-top: 40px;
+}
+
+.garland-right-2 {
+  right: 14%;
+  transform: rotate(4deg);
+  padding-top: 120px;
+}
+
+.garland-piece {
+  width: 40px;
+  height: 80px;
+  background: #ff9999;
+  margin-left: -18px;
+  clip-path: polygon(50% 0%, 70% 20%, 100% 50%, 70% 80%, 50% 100%, 30% 80%, 0% 50%, 30% 20%);
+  animation: sway 3s ease-in-out infinite;
+  box-shadow: 0 4px 8px rgba(255, 153, 153, 0.3);
+}
+
+.garland-piece:nth-child(2n) {
+  background: #ffcc99;
+  width: 35px;
+  height: 75px;
+}
+
+.garland-piece:nth-child(3n) {
+  background: #ffff99;
+  width: 45px;
+  height: 85px;
+}
+
+.garland-piece:nth-child(4n) {
+  background: #99ccff;
+  width: 38px;
+  height: 78px;
+}
+
+.garland-piece:nth-child(5n) {
+  background: #cc99ff;
+  width: 42px;
+  height: 82px;
+}
+
+.garland-piece:nth-child(6n) {
+  background: #ff6b9d;
+}
+
+/* Bóng bay */
+.balloons-left,
+.balloons-right {
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  top: 0;
+}
+
+.balloons-left {
+  left: 0;
+}
+
+.balloons-right {
+  right: 0;
+}
+
+.balloon-wrapper {
+  position: absolute;
+  animation: float-balloon 4s ease-in-out infinite;
+}
+
+.balloon {
+  position: relative;
+  width: 60px;
+  height: 75px;
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: inset -10px -10px 15px rgba(0, 0, 0, 0.1),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: balloon-wiggle 3s ease-in-out infinite;
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+.balloon::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 12px solid currentColor;
+}
+
+.balloon-1 {
+  background: #ff6b9d;
+  color: #ff6b9d;
+}
+
+.balloon-2 {
+  background: #ffd700;
+  color: #ffd700;
+}
+
+.balloon-3 {
+  background: #87ceeb;
+  color: #87ceeb;
+}
+
+.balloon-4 {
+  background: #ff9999;
+  color: #ff9999;
+}
+
+.balloon-string {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100px;
+  background: #8b7355;
+  opacity: 0.6;
+}
+
+/* Confetti rơi */
+.confetti-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  animation: fall-confetti 5s linear infinite;
+  opacity: 0.8;
+}
+
+.birthday-card {
+  width: 450px;
+  height: 600px;
+  cursor: pointer;
+  transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+  z-index: 1;
+}
+
+.birthday-card.open {
+  transform: scale(1.1);
+  opacity: 0;
+}
+
+.card-front {
+  width: 100%;
+  height: 100%;
+  background: #fff8f0;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(139, 69, 19, 0.15);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  border: 4px solid #d4a574;
+}
+
+.card-decorations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Nến trang trí góc */
+.decoration-candle {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.decoration-candle.top-left {
+  top: 25px;
+  left: 25px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.decoration-candle.bottom-right {
+  bottom: 25px;
+  right: 25px;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.decoration-candle .small-flame {
+  width: 15px;
+  height: 30px;
+  position: relative;
+  margin-bottom: 3px;
+  animation: flicker 0.3s ease-in-out infinite alternate;
+}
+
+.decoration-candle .small-flame-inner {
+  position: absolute;
+  width: 15px;
+  height: 30px;
+  background: #ff9933;
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: 0 0 15px #ff9933, 0 0 25px #ff6600;
+}
+
+.decoration-candle .small-flame-inner::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 18px;
+  background: #ffcc00;
+  border-radius: 50% 50% 20% 20%;
+  top: 6px;
+  left: 3.5px;
+}
+
+.decoration-candle .small-candle {
+  width: 10px;
+  height: 40px;
+  background: #c19a6b;
+  border-radius: 0 0 4px 4px;
+  box-shadow: inset 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.decoration-candle .small-candle::before {
+  content: '';
+  position: absolute;
+  top: 73px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 6px;
+  background: #8b6f47;
+  border-radius: 50% 50% 0 0;
+}
+
+/* Cupcake trang trí góc thiệp */
+.decoration-cupcake-corner {
+  position: absolute;
+  width: 50px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounce-cupcake 3s ease-in-out infinite;
+  z-index: 5;
+}
+
+.corner-top-right {
+  top: 25px;
+  right: 25px;
+  animation-delay: 0.7s;
+}
+
+.corner-bottom-left {
+  bottom: 25px;
+  left: 25px;
+  animation-delay: 1.4s;
+}
+
+/* Cupcake trang trí - xung quanh thiệp */
+.cupcake-outside {
+  position: absolute;
+  width: 55px;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounce-cupcake 3s ease-in-out infinite;
+  z-index: 10;
+}
+
+.cupcake-outside.cupcake-1 {
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%) translateX(-150px);
+  animation-delay: 0s;
+}
+
+.cupcake-outside.cupcake-2 {
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%) translateX(-50px);
+  animation-delay: 0.5s;
+}
+
+.cupcake-outside.cupcake-3 {
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%) translateX(50px);
+  animation-delay: 1s;
+}
+
+.cupcake-outside.cupcake-4 {
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%) translateX(-150px);
+  animation-delay: 1.5s;
+}
+
+.cupcake-outside.cupcake-5 {
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%) translateX(-50px);
+  animation-delay: 2s;
+}
+
+.cupcake-outside.cupcake-6 {
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%) translateX(50px);
+  animation-delay: 2.5s;
+}
+
+.cupcake-frosting {
+  width: 45px;
+  height: 30px;
+  background: #ffc9d9;
+  border-radius: 50% 50% 10% 10% / 80% 80% 20% 20%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(255, 201, 217, 0.4);
+  z-index: 2;
+}
+
+.frosting-pink {
+  background: #ffb6d9;
+}
+
+.frosting-yellow {
+  background: #fff4a3;
+}
+
+.frosting-blue {
+  background: #b6e5ff;
+}
+
+.frosting-purple {
+  background: #e5b6ff;
+}
+
+.frosting-orange {
+  background: #ffd9b3;
+}
+
+.cupcake-cherry {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #ff4444;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(255, 68, 68, 0.3);
+}
+
+.cupcake-cherry::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 5px;
+  background: #8b4513;
+}
+
+.cupcake-wrapper {
+  width: 50px;
+  height: 32px;
+  background: #d4826b;
+  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+  position: relative;
+  margin-top: -5px;
+  z-index: 1;
+  box-shadow: 0 4px 8px rgba(212, 130, 107, 0.3);
+}
+
+.wrapper-pink {
+  background: #ff9999;
+}
+
+.wrapper-yellow {
+  background: #ffd966;
+}
+
+.wrapper-blue {
+  background: #99ccff;
+}
+
+.wrapper-purple {
+  background: #cc99ff;
+}
+
+.wrapper-orange {
+  background: #ffb366;
+}
+
+.cupcake-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.cupcake-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Hoa trang trí */
+.decoration-flower {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.decoration-flower.flower-1 {
+  top: 120px;
+  left: 35px;
+  animation: rotate-flower 8s linear infinite;
+}
+
+.decoration-flower.flower-2 {
+  top: 120px;
+  right: 35px;
+  animation: rotate-flower 10s linear infinite;
+}
+
+.decoration-flower.flower-3 {
+  bottom: 120px;
+  left: 35px;
+  animation: rotate-flower 12s linear infinite;
+}
+
+.decoration-flower.flower-4 {
+  bottom: 120px;
+  right: 35px;
+  animation: rotate-flower 9s linear infinite;
+}
+
+.decoration-flower.flower-5 {
+  top: 50%;
+  left: 20px;
+  animation: rotate-flower 11s linear infinite;
+}
+
+.decoration-flower.flower-6 {
+  top: 50%;
+  right: 20px;
+  animation: rotate-flower 7s linear infinite;
+}
+
+.petal-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  background: #ffcc66;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.petal {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #ff9999;
+  border-radius: 50%;
+}
+
+.petal:nth-child(1) {
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.petal:nth-child(2) {
+  top: 3px;
+  right: -3px;
+}
+
+.petal:nth-child(3) {
+  bottom: 3px;
+  right: -3px;
+}
+
+.petal:nth-child(4) {
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.petal:nth-child(5) {
+  bottom: 3px;
+  left: -3px;
+}
+
+.petal:nth-child(6) {
+  top: 3px;
+  left: -3px;
+}
+
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.circle-1 {
+  width: 100px;
+  height: 100px;
+  background: #ffc9d9;
+  top: 30px;
+  left: 30px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.circle-2 {
+  width: 80px;
+  height: 80px;
+  background: #ffd6e0;
+  bottom: 50px;
+  right: 40px;
+  animation: float 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.circle-3 {
+  width: 60px;
+  height: 60px;
+  background: #ffe3ec;
+  top: 50%;
+  right: 30px;
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Hộp quà */
+.gift-box {
+  position: relative;
+  width: 140px;
+  height: 160px;
+  margin: 20px 0;
+  animation: bounce-gift 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+.gift-body {
+  position: absolute;
+  bottom: 0;
+  width: 140px;
+  height: 110px;
+  background: #d4826b;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(139, 69, 19, 0.2);
+  border: 3px solid #b36951;
+  z-index: 1;
+}
+
+.gift-lid {
+  position: absolute;
+  top: 47px;
+  width: 150px;
+  height: 35px;
+  left: -5px;
+  background: #c17a5f;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 5px 15px rgba(139, 69, 19, 0.2);
+  border: 3px solid #a66849;
+  border-bottom: none;
+  z-index: 4;
+}
+
+.gift-ribbon-v {
+  position: absolute;
+  top: 47px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25px;
+  height: 113px;
+  background: #8b4513;
+  z-index: 2;
+  box-shadow: inset 2px 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.gift-ribbon-h {
+  position: absolute;
+  top: 95px;
+  left: 0;
+  width: 140px;
+  height: 25px;
+  background: #8b4513;
+  z-index: 2;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.gift-bow {
+  position: absolute;
+  top: 27px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: #a0522d;
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
+}
+
+.gift-bow::before,
+.gift-bow::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #a0522d;
+  border-radius: 50% 50% 0 50%;
+  top: 8px;
+  box-shadow: 0 2px 6px rgba(139, 69, 19, 0.2);
+}
+
+.gift-bow::before {
+  left: -25px;
+  transform: rotate(-45deg);
+}
+
+.gift-bow::after {
+  right: -25px;
+  transform: rotate(45deg);
+}
+
+.card-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #8b4513;
+  text-align: center;
+  margin: 15px 0;
+  text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.1);
+  font-family: 'Georgia', serif;
+  z-index: 1;
+}
+
+.card-subtitle {
+  font-size: 34px;
+  font-weight: 600;
+  color: #a0522d;
+  margin: 10px 0 20px 0;
+  letter-spacing: 3px;
+  z-index: 1;
+}
+
+.card-hint {
+  font-size: 18px;
+  color: #b8860b;
+  animation: pulse-hint 2s ease-in-out infinite;
+  z-index: 1;
+  background: rgba(255, 248, 240, 0.8);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid #d4a574;
+}
+
+/* ==================== STAGE 2: BÁNH SINH NHẬT ==================== */
+.cake-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1s ease-out;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* Trang trí xung quanh bánh */
+.cake-decorations-around {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Pháo hoa rơi */
+.firework-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  top: -20px;
+  animation: firework-fall linear infinite;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Bóng bay bay lên */
+.floating-balloon {
+  position: absolute;
+  bottom: -100px;
+  animation: balloon-float-up linear infinite;
+}
+
+.balloon-floating {
+  position: relative;
+  width: 50px;
+  height: 62px;
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: inset -8px -8px 12px rgba(0, 0, 0, 0.15),
+    0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.balloon-floating::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid currentColor;
+}
+
+.balloon-floating::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.balloon-string-floating {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 80px;
+  background: #666;
+  opacity: 0.5;
+}
+
+/* Hoa bay xung quanh */
+.floating-flower {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  animation: flower-float ease-in-out infinite;
+  opacity: 0.8;
+}
+
+.floating-flower .petal {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #ff9999;
+  border-radius: 50%;
+}
+
+.floating-flower .petal:nth-child(1) {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffb3d9;
+}
+
+.floating-flower .petal:nth-child(2) {
+  top: 2px;
+  right: -2px;
+  background: #ffc9e0;
+}
+
+.floating-flower .petal:nth-child(3) {
+  bottom: 2px;
+  right: -2px;
+  background: #ff9999;
+}
+
+.floating-flower .petal:nth-child(4) {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffb3d9;
+}
+
+.floating-flower .petal:nth-child(5) {
+  bottom: 2px;
+  left: -2px;
+  background: #ffc9e0;
+}
+
+.floating-flower .petal:nth-child(6) {
+  top: 2px;
+  left: -2px;
+  background: #ff9999;
+}
+
+.floating-flower .petal-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background: #ffd700;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.stars-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #ffd700;
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite;
+  box-shadow: 0 0 8px #ffd700, 0 0 15px #ffd700;
+}
+
+.cake-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 60px 80px 40px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 80px rgba(255, 215, 0, 0.2);
+  margin: auto;
+}
+
+.candles-row {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.candle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flame {
+  width: 18px;
+  height: 45px;
+  position: relative;
+  margin-bottom: 8px;
+  animation: flicker 0.2s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(255, 165, 0, 0.8));
+}
+
+.flame-inner {
+  position: absolute;
+  width: 18px;
+  height: 45px;
+  background: #ffaa00;
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: 0 0 25px #ffaa00,
+    0 0 40px #ff6600,
+    0 0 60px #ff3300,
+    inset 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.flame-inner::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 28px;
+  background: #ffdd00;
+  border-radius: 50% 50% 20% 20%;
+  top: 10px;
+  left: 4px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.flame-inner::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  top: 18px;
+  left: 7px;
+}
+
+.candle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.3));
+}
+
+.candle-top {
+  width: 14px;
+  height: 10px;
+  background: #8b4513;
+  border-radius: 50% 50% 0 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.candle-body {
+  width: 14px;
+  height: 70px;
+  background: linear-gradient(to right, #ff9999 0%, #ffb3b3 50%, #ff9999 100%);
+  border-radius: 0 0 5px 5px;
+  box-shadow: inset 2px 0 5px rgba(255, 255, 255, 0.4),
+    inset -2px 0 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.candle-body::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 2px;
+  width: 3px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+.cake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+}
+
+.cake-layer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layer-1 {
+  width: 380px;
+  height: 110px;
+  background: linear-gradient(135deg, #ffb3d9 0%, #ffc9e0 50%, #ffb3d9 100%);
+  border-radius: 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    inset 0 5px 15px rgba(255, 255, 255, 0.3);
+  position: relative;
+  margin-top: 10px;
+}
+
+.layer-2 {
+  width: 320px;
+  height: 100px;
+  background: linear-gradient(135deg, #ffc9e0 0%, #ffd9eb 50%, #ffc9e0 100%);
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    inset 0 5px 15px rgba(255, 255, 255, 0.3);
+  margin-top: -20px;
+}
+
+.layer-3 {
+  width: 260px;
+  height: 90px;
+  background: linear-gradient(135deg, #ffd9eb 0%, #ffe6f0 50%, #ffd9eb 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    inset 0 5px 15px rgba(255, 255, 255, 0.3);
+  margin-top: -20px;
+}
+
+.frosting {
+  position: absolute;
+  top: -12px;
+  width: 100%;
+  height: 18px;
+  background: linear-gradient(to bottom, #ffffff 0%, #fff5f8 100%);
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 5px rgba(255, 182, 217, 0.3);
+}
+
+.layer-1 .frosting::before,
+.layer-2 .frosting::before,
+.layer-3 .frosting::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.8) 20%,
+      rgba(255, 255, 255, 0.8) 80%,
+      transparent 100%);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.decoration-dots {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #ffd700 0%, #ffaa00 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  animation: dot-glow 2s ease-in-out infinite;
+}
+
+.decoration-flowers {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 45px;
+}
+
+.flower {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #ff69b4 0%, #ff1493 100%);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.5),
+    0 3px 6px rgba(0, 0, 0, 0.2);
+  animation: flower-glow 3s ease-in-out infinite;
+}
+
+.flower::before,
+.flower::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #ff69b4 0%, #ff1493 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
+}
+
+.flower::before {
+  top: -10px;
+  left: 0;
+}
+
+.flower::after {
+  top: 0;
+  left: -10px;
+}
+
+.song-text {
+  margin-top: 60px;
+  font-size: 52px;
+  font-weight: 700;
+  color: #ffd700;
+  animation: bounce-text 1s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8),
+    0 0 40px rgba(255, 215, 0, 0.5),
+    3px 3px 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Georgia', serif;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* ==================== STAGE 3: LỜI CHÚC ==================== */
+.wishes-stage {
+  width: 100%;
+  max-width: 1200px;
+  padding: 40px;
+}
+
+.wishes-container {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-out;
+}
+
+.wishes-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.floating-hearts {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #ff69b4;
+  transform: rotate(-45deg);
+  animation: float-up 6s ease-in infinite;
+  opacity: 0;
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #ff69b4;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -15px;
+  left: 0;
+}
+
+.heart::after {
+  top: 0;
+  left: 15px;
+}
+
+.wishes-title {
+  font-size: 56px;
+  font-weight: 700;
+  color: #d63384;
+  text-align: center;
+  margin-bottom: 60px;
+  text-shadow: 3px 3px 8px rgba(214, 51, 132, 0.2);
+  font-family: 'Georgia', serif;
+  animation: slideDown 0.8s ease-out;
+}
+
+.wishes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 60px;
+}
+
+.wish-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ffc9d9;
+  transform: translateX(-100px);
+  opacity: 0;
+  animation: slideInRight 0.8s ease-out forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wish-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(255, 107, 157, 0.3);
+}
+
+.wish-card p {
+  font-size: 24px;
+  color: #555;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.wish-icon {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Icon trái tim */
+.icon-heart {
+  background: #ff69b4;
+  transform: rotate(-45deg);
+  border-radius: 0 0 0 4px;
+}
+
+.icon-heart::before,
+.icon-heart::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: #ff69b4;
+  border-radius: 50%;
+}
+
+.icon-heart::before {
+  top: -30px;
+  left: 0;
+}
+
+.icon-heart::after {
+  top: 0;
+  left: 30px;
+}
+
+/* Icon ngôi sao */
+.icon-star {
+  background: #ffd700;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* Icon hoa */
+.icon-flower {
+  background: #ff69b4;
+  border-radius: 50%;
+}
+
+.icon-flower::before,
+.icon-flower::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: #ff85ad;
+  border-radius: 50%;
+}
+
+.icon-flower::before {
+  top: -35px;
+  left: 0;
+}
+
+.icon-flower::after {
+  top: 0;
+  left: -35px;
+}
+
+/* Icon lấp lánh */
+.icon-sparkle {
+  background: #ffd700;
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+}
+
+/* Icon quà */
+.icon-gift {
+  background: #ff6b9d;
+  border-radius: 8px;
+  position: relative;
+}
+
+.icon-gift::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 60px;
+  background: #ffd700;
+}
+
+.icon-gift::after {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 60px;
+  height: 10px;
+  background: #ffd700;
+}
+
+.signature {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  animation: fadeIn 1s ease-out 2s both;
+}
+
+.signature-heart {
+  width: 40px;
+  height: 40px;
+  background: #ff69b4;
+  transform: rotate(-45deg);
+  position: relative;
+}
+
+.signature-heart::before,
+.signature-heart::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #ff69b4;
+  border-radius: 50%;
+}
+
+.signature-heart::before {
+  top: -20px;
+  left: 0;
+}
+
+.signature-heart::after {
+  top: 0;
+  left: 20px;
+}
+
+.signature p {
+  font-size: 32px;
+  font-weight: 600;
+  color: #d63384;
+  font-family: 'Georgia', serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes rotate-flower {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce-cupcake {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+@keyframes ribbon-wave {
+
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(1.1);
+  }
+}
+
+/* Animations cho trang trí */
+@keyframes sway {
+
+  0%,
+  100% {
+    transform: rotate(-8deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(8deg) scale(1.05);
+  }
+}
+
+@keyframes float-balloon {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-25px) translateX(8px) rotate(3deg);
+  }
+
+  50% {
+    transform: translateY(-15px) translateX(-5px) rotate(-2deg);
+  }
+
+  75% {
+    transform: translateY(-30px) translateX(-8px) rotate(4deg);
+  }
+}
+
+@keyframes balloon-wiggle {
+
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes fall-confetti {
+  0% {
+    top: -20px;
+    transform: rotateZ(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    top: 100vh;
+    transform: rotateZ(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes bounce-gift {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes pulse-hint {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes flicker {
+  0% {
+    transform: scaleY(1) scaleX(1);
+    filter: brightness(1);
+  }
+
+  100% {
+    transform: scaleY(1.15) scaleX(0.95);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes dot-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6),
+      0 4px 8px rgba(0, 0, 0, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
+      0 4px 8px rgba(0, 0, 0, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  }
+}
+
+@keyframes flower-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.5),
+      0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.8),
+      0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes firework-fall {
+  0% {
+    top: -20px;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 100vh;
+    opacity: 0;
+    transform: rotate(360deg) scale(0.5);
+  }
+}
+
+@keyframes balloon-float-up {
+  0% {
+    bottom: -100px;
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(30px);
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    bottom: 110vh;
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes flower-float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+  }
+
+  75% {
+    transform: translateY(-25px) rotate(270deg);
+  }
+}
+
+@keyframes bounce-text {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    bottom: 100vh;
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ==================== RESPONSIVE - MOBILE ==================== */
+@media (max-width: 768px) {
+  .card-stage {
+    padding: 20px;
+  }
+
+  .birthday-card {
+    width: 90vw;
+    max-width: 380px;
+    height: auto;
+    min-height: 500px;
+  }
+
+  .card-front {
+    padding: 30px 20px;
+  }
+
+  /* Dây tua rua - gần hơn */
+  .garland-left-1 {
+    left: 5%;
+  }
+
+  .garland-left-2 {
+    left: 10%;
+  }
+
+  .garland-right-1 {
+    right: 5%;
+  }
+
+  .garland-right-2 {
+    right: 10%;
+  }
+
+  .garland-piece {
+    width: 30px;
+    height: 60px;
+  }
+
+  /* Ruy băng mobile */
+  .ribbon-decoration {
+    height: 60px;
+  }
+
+  .ribbon-top {
+    top: -30px;
+  }
+
+  .ribbon-bottom {
+    bottom: -30px;
+  }
+
+  .ribbon-wave {
+    height: 60px;
+  }
+
+  /* Cupcake - vị trí mobile */
+  .cupcake-outside.cupcake-1 {
+    top: -70px;
+    left: 15%;
+    transform: translateX(0);
+  }
+
+  .cupcake-outside.cupcake-2 {
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cupcake-outside.cupcake-3 {
+    top: -70px;
+    right: 15%;
+    left: auto;
+    transform: translateX(0);
+  }
+
+  .cupcake-outside.cupcake-4 {
+    bottom: -70px;
+    left: 15%;
+    transform: translateX(0);
+  }
+
+  .cupcake-outside.cupcake-5 {
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cupcake-outside.cupcake-6 {
+    bottom: -70px;
+    right: 15%;
+    left: auto;
+    transform: translateX(0);
+  }
+
+  /* Bóng bay mobile - gần hơn và hiển thị đầy đủ */
+  .balloons-left {
+    width: 15%;
+    left: 0;
+  }
+
+  .balloons-right {
+    width: 15%;
+    right: 0;
+  }
+
+  .balloon {
+    width: 50px;
+    height: 62px;
+  }
+
+  .balloon::after {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Hoa trang trí - giảm kích thước */
+  .decoration-flower {
+    width: 30px;
+    height: 30px;
+  }
+
+  .petal {
+    width: 14px;
+    height: 14px;
+  }
+
+  .petal-center {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Hộp quà */
+  .gift-box {
+    width: 110px;
+    height: 130px;
+    margin: 15px 0;
+  }
+
+  .gift-body {
+    width: 110px;
+    height: 90px;
+  }
+
+  .gift-lid {
+    width: 120px;
+    height: 30px;
+    left: -5px;
+    top: 38px;
+  }
+
+  .gift-ribbon-v {
+    width: 22px;
+    height: 92px;
+    top: 38px;
+  }
+
+  .gift-ribbon-h {
+    top: 75px;
+    width: 110px;
+    height: 22px;
+  }
+
+  .gift-bow {
+    width: 45px;
+    height: 45px;
+    top: 21px;
+  }
+
+  .gift-bow::before,
+  .gift-bow::after {
+    width: 28px;
+    height: 28px;
+    top: 6px;
+  }
+
+  .gift-bow::before {
+    left: -22px;
+  }
+
+  .gift-bow::after {
+    right: -22px;
+  }
+
+  .card-title {
+    font-size: 32px;
+  }
+
+  .card-subtitle {
+    font-size: 26px;
+  }
+
+  .card-hint {
+    font-size: 16px;
+  }
+
+  /* Stage 2 - Bánh */
+  .cake-container {
+    padding: 40px 50px 30px;
+  }
+
+  .cake-layer.layer-1 {
+    width: 300px;
+    height: 90px;
+  }
+
+  .cake-layer.layer-2 {
+    width: 260px;
+    height: 80px;
+  }
+
+  .cake-layer.layer-3 {
+    width: 220px;
+    height: 70px;
+  }
+
+  .candles-row {
+    gap: 18px;
+  }
+
+  .candle-body {
+    height: 60px;
+  }
+
+  .flame {
+    height: 40px;
+  }
+
+  .flame-inner {
+    height: 40px;
+  }
+
+  .decoration-dots {
+    padding: 0 30px;
+  }
+
+  .decoration-flowers {
+    padding: 0 35px;
+  }
+
+  .song-text {
+    font-size: 38px;
+    margin-top: 40px;
+  }
+
+  /* Trang trí xung quanh - giảm số lượng */
+  .firework-particle:nth-child(n+25) {
+    display: none;
+  }
+
+  .floating-balloon:nth-child(n+8) {
+    display: none;
+  }
+
+  .floating-flower:nth-child(n+12) {
+    display: none;
+  }
+
+  .balloon-floating {
+    width: 45px;
+    height: 56px;
+  }
+
+  .floating-flower {
+    width: 25px;
+    height: 25px;
+  }
+
+  .floating-flower .petal {
+    width: 12px;
+    height: 12px;
+  }
+
+  .floating-flower .petal-center {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Stage 3 - Lời chúc */
+  .wishes-stage {
+    padding: 20px;
+  }
+
+  .wishes-title {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .wish-card {
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .wish-card p {
+    font-size: 18px;
+  }
+
+  .wish-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon-heart::before,
+  .icon-heart::after {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon-heart::before {
+    top: -25px;
+  }
+
+  .icon-heart::after {
+    left: 25px;
+  }
+
+  .icon-flower::before,
+  .icon-flower::after {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon-flower::before {
+    top: -29px;
+  }
+
+  .icon-flower::after {
+    left: -29px;
+  }
+
+  .icon-gift::before {
+    width: 8px;
+    height: 50px;
+  }
+
+  .icon-gift::after {
+    width: 50px;
+    height: 8px;
+    top: 21px;
+  }
+
+  .signature p {
+    font-size: 24px;
+  }
+
+  /* Confetti - giảm số lượng */
+  .confetti:nth-child(n+12) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .birthday-card {
+    width: 95vw;
+    max-width: 340px;
+  }
+
+  .card-title {
+    font-size: 28px;
+  }
+
+  .card-subtitle {
+    font-size: 22px;
+  }
+
+  .wishes-title {
+    font-size: 28px;
+  }
+
+  .wish-card p {
+    font-size: 16px;
+  }
+
+  .wish-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .icon-heart::before,
+  .icon-heart::after {
+    width: 45px;
+    height: 45px;
+  }
+
+  .icon-heart::before {
+    top: -22.5px;
+  }
+
+  .icon-heart::after {
+    left: 22.5px;
+  }
+
+  .icon-flower::before,
+  .icon-flower::after {
+    width: 45px;
+    height: 45px;
+  }
+
+  .icon-flower::before {
+    top: -26px;
+  }
+
+  .icon-flower::after {
+    left: -26px;
+  }
+
+  .icon-gift::before {
+    width: 7px;
+    height: 45px;
+  }
+
+  .icon-gift::after {
+    width: 45px;
+    height: 7px;
+    top: 19px;
+  }
+
+  .song-text {
+    font-size: 24px;
+    margin-top: 35px;
+  }
+
+  /* Trang trí xung quanh - mobile */
+  .firework-particle:nth-child(n+15) {
+    display: none;
+  }
+
+  .floating-balloon:nth-child(n+5) {
+    display: none;
+  }
+
+  .floating-flower:nth-child(n+8) {
+    display: none;
+  }
+
+  .balloon-floating {
+    width: 35px;
+    height: 43px;
+  }
+
+  .balloon-string-floating {
+    height: 50px;
+  }
+
+  .floating-flower {
+    width: 18px;
+    height: 18px;
+  }
+
+  .floating-flower .petal {
+    width: 8px;
+    height: 8px;
+  }
+
+  .floating-flower .petal-center {
+    width: 5px;
+    height: 5px;
+  }
+
+  .firework-particle {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* Stage 2 - Bánh mobile */
+  .cake-stage {
+    padding: 20px 10px;
+  }
+
+  .cake-container {
+    padding: 25px 30px 20px;
+  }
+
+  .cake-layer.layer-1 {
+    width: 260px;
+    height: 80px;
+  }
+
+  .cake-layer.layer-2 {
+    width: 220px;
+    height: 70px;
+  }
+
+  .cake-layer.layer-3 {
+    width: 180px;
+    height: 60px;
+  }
+
+  .candles-row {
+    gap: 15px;
+  }
+
+  .candle-body {
+    height: 50px;
+  }
+
+  .flame {
+    height: 35px;
+    width: 16px;
+  }
+
+  .flame-inner {
+    height: 35px;
+    width: 16px;
+  }
+
+  .flame-inner::before {
+    width: 8px;
+    height: 22px;
+  }
+
+  .candle-top {
+    width: 12px;
+    height: 8px;
+  }
+
+  .candle-body {
+    width: 12px;
+  }
+
+  .decoration-dots {
+    padding: 0 25px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .decoration-flowers {
+    padding: 0 30px;
+  }
+
+  .flower {
+    width: 16px;
+    height: 16px;
+  }
+
+  .flower::before,
+  .flower::after {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Hộp quà nhỏ hơn */
+  .gift-box {
+    width: 100px;
+    height: 120px;
+    margin: 10px 0;
+  }
+
+  .gift-body {
+    width: 100px;
+    height: 80px;
+    border-radius: 8px;
+    border-width: 2px;
+  }
+
+  .gift-lid {
+    width: 108px;
+    height: 26px;
+    left: -4px;
+    top: 38px;
+    border-radius: 8px 8px 0 0;
+    border-width: 2px;
+  }
+
+  .gift-ribbon-v {
+    width: 18px;
+    height: 82px;
+    top: 38px;
+  }
+
+  .gift-ribbon-h {
+    top: 70px;
+    width: 100px;
+    height: 18px;
+  }
+
+  .gift-bow {
+    width: 36px;
+    height: 36px;
+    top: 22px;
+  }
+
+  .gift-bow::before,
+  .gift-bow::after {
+    width: 22px;
+    height: 22px;
+    top: 4px;
+  }
+
+  .gift-bow::before {
+    left: -18px;
+  }
+
+  .gift-bow::after {
+    right: -18px;
+  }
+
+  /* Cupcake nhỏ hơn */
+  .cupcake-outside {
+    width: 45px;
+    height: 55px;
+  }
+
+  .cupcake-frosting {
+    width: 40px;
+    height: 25px;
+  }
+
+  .cupcake-wrapper {
+    width: 45px;
+    height: 28px;
+  }
+
+  /* Cupcake góc nhỏ hơn */
+  .decoration-cupcake-corner {
+    width: 40px;
+    height: 50px;
+  }
+
+  .corner-top-right {
+    top: 20px;
+    right: 20px;
+  }
+
+  .corner-bottom-left {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  /* Dây tua rua nhỏ hơn */
+  .garland-piece {
+    width: 25px;
+    height: 50px;
+  }
+
+  .garland-left-1,
+  .garland-left-2 {
+    left: 2%;
+  }
+
+  .garland-right-1,
+  .garland-right-2 {
+    right: 2%;
+  }
+
+  /* Ruy băng nhỏ hơn */
+  .ribbon-decoration {
+    height: 50px;
+  }
+
+  .ribbon-top {
+    top: -25px;
+  }
+
+  .ribbon-bottom {
+    bottom: -25px;
+  }
+
+  .ribbon-wave {
+    height: 50px;
+  }
+
+  /* Bóng bay nhỏ hơn */
+  .balloon {
+    width: 45px;
+    height: 56px;
+  }
+
+  .balloon::after {
+    width: 12px;
+    height: 12px;
+  }
+
+  .balloon-string {
+    height: 80px;
+  }
+}
+
+/* ==================== STAGE 4: HỘP QUÀ LỚN ==================== */
+.gift-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+  animation: fadeIn 1s ease-out;
+}
+
+.gift-decorations {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Confetti rơi */
+.confetti-fall {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: -20px;
+  animation: confetti-drop linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes confetti-drop {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Ngôi sao lấp lánh */
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  animation: sparkle-twinkle 1.5s ease-in-out infinite;
+  box-shadow: 0 0 20px #fff, 0 0 30px #ffd700;
+}
+
+@keyframes sparkle-twinkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Bóng bay bay lên cho gift stage */
+.balloon-rise {
+  position: absolute;
+  bottom: -100px;
+  animation: balloon-rise-up linear infinite;
+}
+
+.balloon-gift {
+  position: relative;
+  width: 60px;
+  height: 75px;
+  border-radius: 50% 50% 48% 48%;
+  box-shadow: inset -10px -10px 15px rgba(0, 0, 0, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.balloon-color-1 {
+  background: #ff6b9d;
+}
+
+.balloon-color-2 {
+  background: #ffd700;
+}
+
+.balloon-color-3 {
+  background: #87ceeb;
+}
+
+.balloon-color-4 {
+  background: #98fb98;
+}
+
+.balloon-highlight {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 20px;
+  height: 25px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.balloon-string-gift {
+  position: absolute;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 70px;
+  background: #999;
+}
+
+@keyframes balloon-rise-up {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-50vh) translateX(30px);
+  }
+
+  100% {
+    transform: translateY(-120vh) translateX(0);
+  }
+}
+
+/* Hộp quà lớn */
+.big-gift-box {
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  animation: gift-bounce 2s ease-in-out infinite;
+}
+
+.big-gift-box:hover {
+  transform: scale(1.05);
+}
+
+@keyframes gift-bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.gift-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  animation: glow-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Nắp hộp quà lớn */
+.big-gift-lid {
+  position: relative;
+  width: 320px;
+  height: 80px;
+  margin-bottom: -5px;
+  z-index: 2;
+  transition: transform 1s ease-out, opacity 0.8s ease-out;
+  transform-origin: bottom center;
+}
+
+.big-gift-box.opened .big-gift-lid {
+  transform: translateY(-200px) rotateX(-120deg);
+  opacity: 0;
+}
+
+.lid-top {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+  border-radius: 20px 20px 0 0;
+  position: relative;
+  box-shadow: 0 -5px 20px rgba(255, 20, 147, 0.4),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Ribbon trên nắp */
+.ribbon-vertical-big {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to right, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.ribbon-horizontal-big {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Nơ ribbon */
+.ribbon-bow {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 80px;
+  z-index: 3;
+}
+
+.bow-left,
+.bow-right {
+  position: absolute;
+  width: 45px;
+  height: 60px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffc700 100%);
+  border-radius: 50% 50% 50% 10%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+    inset 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.bow-left {
+  left: 0;
+  transform: rotate(-25deg);
+}
+
+.bow-right {
+  right: 0;
+  transform: rotate(25deg) scaleX(-1);
+}
+
+.bow-center {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 35px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+/* Thân hộp quà */
+.gift-body-big {
+  position: relative;
+  width: 320px;
+  height: 280px;
+  background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 20px 60px rgba(255, 20, 147, 0.5),
+    inset 0 20px 40px rgba(255, 255, 255, 0.1),
+    inset 0 -20px 40px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease-out;
+}
+
+.big-gift-box.opened .gift-body-big {
+  transform: scale(1.1);
+  box-shadow: 0 30px 80px rgba(255, 215, 0, 0.6);
+}
+
+.gift-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 40px;
+  gap: 20px;
+}
+
+.pattern-dot {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+.pattern-dot:nth-child(even) {
+  animation-delay: 0.3s;
+}
+
+@keyframes dot-pulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.body-ribbon-vertical {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to right, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.body-ribbon-horizontal {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Hint nhấn vào */
+.click-hint {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  animation: hint-bounce 1.5s ease-in-out infinite;
+}
+
+.click-hint span {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8),
+    0 0 40px rgba(255, 215, 0, 0.5),
+    3px 3px 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Georgia', serif;
+}
+
+@keyframes hint-bounce {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+/* Message sau khi mở quà */
+.gift-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 20;
+  animation: message-appear 1s ease-out;
+}
+
+@keyframes message-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.message-hearts {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.message-heart {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #ff69b4;
+  transform: rotate(-45deg);
+  animation: heart-float-up 4s ease-in infinite;
+  opacity: 0;
+}
+
+.message-heart::before,
+.message-heart::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #ff69b4;
+  border-radius: 50%;
+}
+
+.message-heart::before {
+  top: -20px;
+  left: 0;
+}
+
+.message-heart::after {
+  top: 0;
+  left: 20px;
+}
+
+@keyframes heart-float-up {
+  0% {
+    transform: translateY(0) rotate(-45deg) scale(0);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh) rotate(-45deg) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.gift-message h2 {
+  font-size: 56px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 1),
+    0 0 60px rgba(255, 215, 0, 0.7),
+    5px 5px 15px rgba(0, 0, 0, 0.8);
+  font-family: 'Georgia', serif;
+  margin-top: 100px;
+  animation: text-glow 2s ease-in-out infinite;
+}
+
+@keyframes text-glow {
+
+  0%,
+  100% {
+    text-shadow: 0 0 30px rgba(255, 215, 0, 1),
+      0 0 60px rgba(255, 215, 0, 0.7),
+      5px 5px 15px rgba(0, 0, 0, 0.8);
+  }
+
+  50% {
+    text-shadow: 0 0 40px rgba(255, 215, 0, 1),
+      0 0 80px rgba(255, 215, 0, 0.9),
+      5px 5px 20px rgba(0, 0, 0, 0.9);
+  }
+}
+
+/* Responsive cho gift stage */
+@media (max-width: 768px) {
+  .big-gift-box {
+    transform: scale(0.85);
+  }
+
+  .gift-glow {
+    width: 400px;
+    height: 400px;
+  }
+
+  .gift-message h2 {
+    font-size: 42px;
+    padding: 0 20px;
+  }
+
+  .click-hint span {
+    font-size: 24px;
+  }
+
+  .confetti-fall:nth-child(n+30) {
+    display: none;
+  }
+
+  .sparkle:nth-child(n+20) {
+    display: none;
+  }
+
+  .balloon-rise:nth-child(n+10) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .big-gift-box {
+    transform: scale(0.65);
+  }
+
+  .big-gift-lid {
+    width: 260px;
+    height: 65px;
+  }
+
+  .gift-body-big {
+    width: 260px;
+    height: 220px;
+  }
+
+  .ribbon-vertical-big {
+    width: 32px;
+  }
+
+  .ribbon-horizontal-big {
+    height: 32px;
+    top: 28px;
+  }
+
+  .body-ribbon-vertical {
+    width: 32px;
+  }
+
+  .body-ribbon-horizontal {
+    height: 32px;
+  }
+
+  .ribbon-bow {
+    width: 80px;
+    height: 65px;
+  }
+
+  .bow-left,
+  .bow-right {
+    width: 36px;
+    height: 48px;
+  }
+
+  .bow-center {
+    width: 24px;
+    height: 28px;
+  }
+
+  .gift-message h2 {
+    font-size: 32px;
+    padding: 0 15px;
+  }
+
+  .click-hint span {
+    font-size: 20px;
+  }
+
+  .click-hint {
+    bottom: -100px;
+  }
+
+  .message-heart {
+    width: 30px;
+    height: 30px;
+  }
+
+  .message-heart::before,
+  .message-heart::after {
+    width: 30px;
+    height: 30px;
+  }
+
+  .message-heart::before {
+    top: -15px;
+  }
+
+  .message-heart::after {
+    left: 15px;
+  }
+
+  .confetti-fall:nth-child(n+20) {
+    display: none;
+  }
+
+  .sparkle:nth-child(n+15) {
+    display: none;
+  }
+
+  .balloon-rise:nth-child(n+8) {
+    display: none;
+  }
+
+  .balloon-gift {
+    width: 45px;
+    height: 56px;
+  }
+}
