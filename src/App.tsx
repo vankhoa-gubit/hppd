@@ -654,7 +654,7 @@ function App() {
       {/* Audio element ẩn để preload */}
       <audio
         ref={recordAudioRef}
-        src="/record/hppd.mp3"
+        src={`${import.meta.env.BASE_URL}record/hppd.mp3`}
         preload="auto"
         className="hidden"
       />
