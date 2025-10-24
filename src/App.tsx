@@ -532,13 +532,13 @@ function App() {
 
               <div className="wish-card bg-white rounded-[20px] py-5 px-5 md:py-[30px] md:px-10 flex flex-col md:flex-row items-center gap-4 md:gap-[30px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] border-2 border-[#ffc9d9] hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(255,107,157,0.3)] transition-all duration-300 text-center md:text-left" style={{ animationDelay: '1.5s' }}>
                 <div className="wish-icon icon-gift"></div>
-                <p className="text-base md:text-2xl text-[#555] leading-relaxed flex-1">Mãi mãi là thiên thần của con. Yêu mẹ nhiều lắm!</p>
+                <p className="text-base md:text-2xl text-[#555] leading-relaxed flex-1">Yêu mẹ nhiều !</p>
               </div>
             </div>
 
             <div className="text-center flex flex-col items-center gap-[15px] animate-[fadeIn_1s_ease-out_2s_both]">
               <div className="signature-heart"></div>
-              <p className="text-2xl md:text-[32px] font-semibold text-[#d63384] font-serif">Con yêu của mẹ</p>
+              <p className="text-2xl md:text-[32px] font-semibold text-[#d63384] font-serif">Zai cưng của mẹ hehe</p>
             </div>
           </div>
         </div>
