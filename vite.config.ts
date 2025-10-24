@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
   const base = command === 'build' ? '/hppd/' : '/'
-  
+
   return {
     plugins: [react(), tailwindcss()],
     base,
